@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="684" viewBox="0 0 480 684" role="img" aria-labelledby="title desc">
+  <title id="title">Auron executor memory layout</title>
+  <desc id="desc">One executor process contains JVM heap and allocations outside that heap. Auron's native manager accounts for reported operator usage; it does not cap every allocation. Process RSS spans both areas. The diagram is conceptual, not to scale.</desc>
+  <rect width="480" height="684" rx="12" fill="#ffffff"/>
+  <g font-family="system-ui, -apple-system, sans-serif" fill="#243447">
+    <rect x="16" y="16" width="448" height="496" rx="12" fill="#f8fafc" stroke="#64748b" stroke-width="2"/>
+    <text x="40" y="51" font-size="23" font-weight="600">One Spark executor process</text>
+    <rect x="36" y="76" width="408" height="160" rx="8" fill="#eaf3fb" stroke="#3972a1"/>
+    <text x="56" y="109" font-size="22" font-weight="600">JVM heap</text>
+    <text x="56" y="143" font-size="19">Spark execution and storage</text>
+    <text x="56" y="174" font-size="19">Auron heap-backed spill buffers</text>
+    <text x="56" y="205" font-size="19">Other Java objects</text>
+    <rect x="36" y="254" width="408" height="194" rx="8" fill="#edf5f0" stroke="#48765b"/>
+    <text x="56" y="287" font-size="22" font-weight="600">Outside the JVM heap</text>
+    <text x="56" y="321" font-size="19">Rust operator state and buffers</text>
+    <text x="56" y="352" font-size="19">Java direct buffers</text>
+    <text x="56" y="383" font-size="19">JVM runtime, stacks, libraries</text>
+    <text x="56" y="414" font-size="19">Allocator overhead and retained pages</text>
+    <text x="40" y="485" font-size="19">Process RSS spans both areas.</text>
+    <rect x="16" y="536" width="448" height="132" rx="10" fill="#ffffff" stroke="#64748b" stroke-width="2" stroke-dasharray="6 4"/>
+    <text x="36" y="569" font-size="21" font-weight="600">Accounting, not a physical region</text>
+    <text x="36" y="601" font-size="19">MemManager tracks reported usage</text>
+    <text x="36" y="630" font-size="19">and asks native consumers to spill.</text>
+    <text x="36" y="653" font-size="17" fill="#526174">The target does not cap every allocation.</text>
+  </g>
+</svg>
