@@ -55,7 +55,7 @@ The JVM deduction, logged as `jvm_direct`, sums buffer-pool capacities through [
 
 ## How spilling works
 
-Spilling releases native working state by serializing it for later readback. When the native manager triggers a spill, the operator can use available Spark heap memory to avoid immediate disk I/O. If heap storage is ineligible or a write cannot acquire enough memory, it uses a local file. Heap-backed spills can also move to disk later. The diagram covers these heap/file paths; remote shuffle can instead send buffered data to its service.
+When the native manager triggers a spill, the operator can use available Spark heap memory to avoid immediate disk I/O. If heap storage is ineligible or a write cannot acquire enough memory, it uses a local file. Heap-backed spills can also move to disk later.
 
 [![Spill-storage decisions: heap storage requires an active task and both Spark execution-pool and JVM committed-heap usage below the configured threshold, 90% by default. Each write must then receive a full memory grant. Otherwise use disk; existing heap buffers can also move to disk later.](/memory-spilling.svg)](/memory-spilling.svg)
 
@@ -79,6 +79,8 @@ Eligibility permits an attempt; it does not reserve space. [SparkOnHeapSpillMana
 A later write can fail to acquire memory, or Spark can call the heap manager's spill callback to reclaim execution memory. In either case, heap-backed spill data can move to disk. Spark is reclaiming the serialized spill buffers, not directly spilling the original native operator state.
 
 Files use Spark's local block directories. The compressed spill interface uses `spark.auron.spill.compression.codec`.
+
+For remote shuffle, such as Celeborn or Uniffle, a spill instead drains Auron's buffered shuffle output into the service's client writer. This releases Auron's buffer without creating a temporary heap/file spill; the client may still buffer data before sending it. Sort and aggregation spills are temporary state for later merging, not output sent to a shuffle service.
 
 ### What triggers the native spill?
 
