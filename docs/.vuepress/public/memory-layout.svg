@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1240" height="544" viewBox="0 0 1240 544" role="img" aria-labelledby="title desc">
   <title id="title">Spark container and JVM memory budgets</title>
-  <desc id="desc">A container includes the executor JVM and any other processes. Top braces label spark.executor.memory over the JVM heap, spark.memory.offHeap.size over an optional Spark-managed off-heap pool inside the JVM process, and spark.executor.memoryOverhead over other outside-heap uses and other processes. Green highlights identify Auron heap spill buffers inside the heap and Auron native allocations outside it. The Spark-managed off-heap pool is disabled in the example. The scopes are conceptual, not fixed physical partitions. Python-specific budgeting is omitted.</desc>
+  <desc id="desc">A container includes the executor JVM and any other processes. Top braces label spark.executor.memory over the JVM heap, spark.memory.offHeap.size over an optional Spark-managed off-heap pool inside the JVM process, and spark.executor.memoryOverhead over other outside-heap uses and other processes. Green highlights identify Auron heap spill buffers inside the heap and Auron native allocations outside it. The scopes are conceptual, not fixed physical partitions. Python-specific budgeting is omitted.</desc>
   <rect width="1240" height="544" rx="12" fill="#ffffff"/>
   <g font-family="Arial, sans-serif" font-size="19" fill="#334155">
     <g font-family="monospace" font-size="18" text-anchor="middle">
@@ -39,7 +39,6 @@
     <text x="64" y="313">Spark execution / storage</text>
     <text x="64" y="385">Other Java objects</text>
     <text x="352" y="313">Execution / storage</text>
-    <text x="352" y="385" fill="#64748b">Disabled in this example</text>
     <text x="640" y="349">Java direct buffers</text>
     <text x="640" y="385">JVM internals, stacks</text>
     <text x="640" y="421">Allocator overhead</text>
