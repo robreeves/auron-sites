@@ -87,6 +87,6 @@ Spark off-heap allocations still contribute to process RSS without raising Auron
 | `spark.auron.memoryFraction` | `0.6` | Multiplier used to initialize the process-wide native target. Lowering the native fraction encourages earlier spilling. |
 | `spark.auron.process.vmrss.memoryFraction` | `0.9` | Process-RSS spill threshold fraction of configured heap plus overhead. |
 | `spark.auron.onHeapSpill.memoryFraction` | `0.9` | Usage-ratio threshold for allowing a new heap-backed spill. Lowering the heap-spill threshold routes more new spills to disk. |
-| `spark.auron.batchSize` | `10000` rows | Suggested Arrow batch row count, not a byte ceiling. |
-| `spark.auron.suggested.batch.memSize` | `8388608` bytes (8 MiB) | Suggested batch-memory size used by batching helpers. |
+| `spark.auron.batchSize` | `10000` rows | Suggested row count per batch. Memory-aware output sizing can choose fewer rows based on `spark.auron.suggested.batch.memSize`, especially for wider rows. |
+| `spark.auron.suggested.batch.memSize` | `8388608` bytes (8 MiB) | Suggested memory size per batch. Output sizing estimates how many rows fit this target. Coalescing can emit a batch when either this target or the row target is reached. These are suggestions, not strict limits. |
 | `spark.auron.spill.compression.codec` | `lz4` | Codec for the compressed spill interface. |
